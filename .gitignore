@@ -1,0 +1,14 @@
+.vs/
+*.meta
+*.prefab
+*.png
+*.csv
+Library/
+OpenOfficeCalcFiles/
+ProjectSettings/
+Temp/
+*.unity
+Zan.sln
+Zan.csproj
+UnityPackageManager/manifest.json
+参考資料/ざっくり仕様.jpg
