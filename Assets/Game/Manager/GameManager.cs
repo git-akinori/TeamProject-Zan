@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         csvReader.ReadCSV(stagePath);
-        Debug.Log(csvReader.DataList[0]);
+        Debug.Log(csvReader.DataList[0][0]);
     }
 
     void Update()
