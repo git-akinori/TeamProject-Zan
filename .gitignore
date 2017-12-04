@@ -14,3 +14,8 @@ UnityPackageManager/manifest.json
 参考資料/ざっくり仕様.jpg
 Assets/Resources/
 .collabignore
+Assets/Game/Enemy/slimeMove.cs
+Assets/Game/Enemy/orkMove.cs
+Assets/Game/Enemy/goblinMove.cs
+Assets/Game/Enemy/enemyMove_sisaku.cs
+Assets/Scene_Home/HomeMain.cs

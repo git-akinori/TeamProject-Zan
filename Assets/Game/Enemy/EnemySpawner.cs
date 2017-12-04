@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-
     [SerializeField]
     GameObject enemy;
     List<GameObject> enemyList = new List<GameObject>();
 
-    CsvReader csvReader = new CsvReader();
-    const string stageCsvPath = "stage";
+    [SerializeField]
+    Vector3 offsetPos;
 
     void Start()
     {
-        var stageData = csvReader.ReadCSV(stageCsvPath);
         SpawnEnemy();
     }
 
@@ -27,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemy()
     {
         var obj = Instantiate(enemy, transform);
+        obj.transform.position += offsetPos;
         enemyList.Add(obj);
     }
 }
