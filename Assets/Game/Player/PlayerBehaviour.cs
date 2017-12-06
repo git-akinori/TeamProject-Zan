@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-
 	[SerializeField]
 	float maxLIFE = 100;
 	[SerializeField]
@@ -21,7 +20,7 @@ public class PlayerBehaviour : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		life.Add(0.1f);
+		life.Add(-0.1f);
 		skill.Add(0.1f);
 	}
 
@@ -50,9 +49,14 @@ public class PlayerBehaviour : MonoBehaviour
 		public float Ratio { get { return cur / max; } }
 	}
 
+	// ダメージを与える処理で呼び出す
 	public void Damaged(float value) { life.Add(-value); }
+
+	// 敵を倒したときの処理で呼び出す
 	public void AddSkillPoint(float value) { skill.Add(value); }
 
+	// LIFEの割合を得たいときに呼び出す
 	public float LifeRatio { get { return life.Ratio; } }
+	// SKILLの割合を得たいときに呼び出す
 	public float SkillRatio { get { return skill.Ratio; } }
 }

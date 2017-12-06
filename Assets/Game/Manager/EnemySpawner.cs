@@ -21,7 +21,9 @@ public class EnemySpawner : MonoBehaviour
 
     }
 
-    // Spawn Enemy Function
+
+
+    // ポンポンスポポーン
     void SpawnEnemy()
     {
         var obj = Instantiate(enemy, transform);

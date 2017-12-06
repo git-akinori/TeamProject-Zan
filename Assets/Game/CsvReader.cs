@@ -1,11 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
 public class CsvReader
 {
-
     List<string[]> dataList = new List<string[]>();
     int totalRows = 0;
 

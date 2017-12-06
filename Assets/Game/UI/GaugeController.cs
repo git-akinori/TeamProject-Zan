@@ -21,7 +21,7 @@ public class GaugeController : MonoBehaviour
 		skillGauge.fillAmount = playerBehaviour.SkillRatio;
     }
 	
-    void Update()
+    void FixedUpdate()
     {
 		lifeGauge.fillAmount = playerBehaviour.LifeRatio;
 		skillGauge.fillAmount = playerBehaviour.SkillRatio;

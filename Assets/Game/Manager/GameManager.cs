@@ -27,8 +27,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+		string filePath = "";
+
+		// ウェーブデータを選択
+		if (true) { filePath = filePaths[0]; }
+
         // ウェーブデータをロード
-        waveData = csvReader.ReadCSV(filePaths[0]);
+        waveData = csvReader.ReadCSV(filePath);
     }
 
     float t;
@@ -41,4 +46,6 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Game");
         }
     }
+
+	public void ToHomeScene() { SceneManager.LoadScene("Home"); }
 }
