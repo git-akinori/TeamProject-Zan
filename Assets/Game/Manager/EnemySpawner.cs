@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField]
+	[SerializeField]
     GameObject enemy;
     List<GameObject> enemyList = new List<GameObject>();
 

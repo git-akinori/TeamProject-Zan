@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -7,19 +7,15 @@ public class GameManager : MonoBehaviour
 {
     static GameManager gameManager = null;
     
-    enum EnumCsvName
-    {
-        StageData,
-    }
-
     CsvReader csvReader = new CsvReader();
-    string[] filePaths = new string[] { EnumCsvName.StageData.ToString() };
-    static List<string[]> spawnData = new List<string[]>();
+    string[] filePaths = new string[] {
+		"WaveData_Stage1",
+		"WaveData_Stage2",
+		"WaveData_Stage3",
+		"WaveData_Stage4",
+		"WaveData_Stage5",};
 
-    [SerializeField]
-    GameObject player;
-    [SerializeField]
-    Vector3 playerOffset;
+    static List<string[]> waveData = new List<string[]>();
 
     void Awake()
     {
@@ -31,16 +27,14 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // スポーン情報をロード
-        spawnData = csvReader.ReadCSV(filePaths[0]);
-
-        // プレイヤーを生成
-        Instantiate(player, transform).transform.position += playerOffset;
+        // ウェーブデータをロード
+        waveData = csvReader.ReadCSV(filePaths[0]);
     }
+
     float t;
     void Update()
     {
-        t += Time.deltaTime;
+        //t += Time.deltaTime;
         if (t > 3)
         {
             t = 0;
