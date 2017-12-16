@@ -5,7 +5,6 @@ using System.IO;
 
 public class CsvReader
 {
-    List<string[]> dataList = new List<string[]>();
     int totalRows = 0;
 
     // filePath : 拡張子はつけない
@@ -25,25 +24,29 @@ public class CsvReader
             // 1行を格納
             string line = reader.ReadLine();
 
-            //// 空欄の場合は無視
-            //System.StringSplitOptions option = System.StringSplitOptions.RemoveEmptyEntries;
-            //// CR＋LR の 改行 で区切る
-            //string[] stringArray = line.Split(new char[] { '\r', '\n' }, option);
+			//// 空欄の場合は無視
+			//System.StringSplitOptions option = System.StringSplitOptions.RemoveEmptyEntries;
+			//// CR＋LR の 改行 で区切る
+			//string[] stringArray = line.Split(new char[] { '\r', '\n' }, option);
 
-            // [,] で 区切る
-            string[] stringArray = line.Split(',');
+			// [,] で 区切る
+			//string[] stringArray = line.Split(',');
+
+			// [,] で 区切って 空欄の場合は無視
+			System.StringSplitOptions option = System.StringSplitOptions.RemoveEmptyEntries;
+			string[] stringArray = line.Split(new char[] { ',' }, option);
 
             // 先頭が "//" なら追加しない
             if (stringArray[0] == "//") continue;
 
-            dataList.Add(stringArray);
+            data.Add(stringArray);
             ++totalRows;
         }
 
         if (totalRows == 0) return null;
+		totalRows = 0;
         return data;
     }
-
-    public List<string[]> DataList { get { return dataList; } }
+	
     public int TotalRows { get { return totalRows; } }
 }

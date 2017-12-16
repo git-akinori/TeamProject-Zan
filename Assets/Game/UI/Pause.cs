@@ -7,10 +7,16 @@ public class Pause : MonoBehaviour
 	[SerializeField]
 	GameObject PauseUI;
 
+	// 起動時オフ
+	private void Start()
+	{
+		PauseUI.SetActive(false);
+	}
+
 	// ポーズ画面に入る処理
 	public void EnterPause()
 	{
-		if (Time.timeScale == 1.0f)
+		if (Time.timeScale != 0)
 		{
 			Time.timeScale = 0;
 			PauseUI.SetActive(true);

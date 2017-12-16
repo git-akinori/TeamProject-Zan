@@ -20,3 +20,8 @@ Assets/Game/Enemy/goblinMove.cs
 Assets/Game/Enemy/enemyMove_sisaku.cs
 Assets/Scene_Home/HomeMain.cs
 Assets/Scene_Home/
+/Assets/etc/AttackTest/AttacckTest.cs
+/Assets/etc/AttackTest/AttackScript.cs
+/Assets/etc/AttackTest/AttackTrigger.cs
+/Assets/Scene_Title/standby.cs
+/Assets/Scene_Title/scenechange.cs

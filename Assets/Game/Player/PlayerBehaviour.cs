@@ -12,6 +12,9 @@ public class PlayerBehaviour : MonoBehaviour
 	Gauge life;
 	Gauge skill;
 
+	[SerializeField]
+	GameObject ResultCanvas;
+
 	void Start()
 	{
 		life = new Gauge(maxLIFE, 1);
@@ -20,8 +23,13 @@ public class PlayerBehaviour : MonoBehaviour
 
 	void FixedUpdate()
 	{
-		life.Add(-0.1f);
+		//life.Add(-0.1f);
 		skill.Add(0.1f);
+
+		if(life.CurValue <= 0)
+		{
+			ResultCanvas.GetComponent<Result>().EnterResult();
+		}
 	}
 
 	class Gauge
@@ -47,6 +55,7 @@ public class PlayerBehaviour : MonoBehaviour
 		}
 
 		public float Ratio { get { return cur / max; } }
+		public float CurValue { get { return cur; } }
 	}
 
 	// ダメージを与える処理で呼び出す
