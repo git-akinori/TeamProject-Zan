@@ -7,10 +7,10 @@ public class PlayerBehaviour : MonoBehaviour
 	[SerializeField]
 	float maxLIFE = 100;
 	[SerializeField]
-	float maxSKILL = 100;
+	float maxEXTRA = 100;
 
 	Gauge life;
-	Gauge skill;
+	Gauge extra;
 
 	[SerializeField]
 	GameObject ResultCanvas;
@@ -18,17 +18,17 @@ public class PlayerBehaviour : MonoBehaviour
 	void Start()
 	{
 		life = new Gauge(maxLIFE, 1);
-		skill = new Gauge(maxSKILL, 0);
+		extra = new Gauge(maxEXTRA, 0);
 	}
 
 	void FixedUpdate()
 	{
 		//life.Add(-0.1f);
-		skill.Add(0.1f);
+		extra.Add(0.1f);
 
 		if(life.CurValue <= 0)
 		{
-			ResultCanvas.GetComponent<Result>().EnterResult();
+			GameManager.Member.EnterResult(false); // LOSE
 		}
 	}
 
@@ -62,10 +62,10 @@ public class PlayerBehaviour : MonoBehaviour
 	public void Damaged(float value) { life.Add(-value); }
 
 	// 敵を倒したときの処理で呼び出す
-	public void AddSkillPoint(float value) { skill.Add(value); }
+	public void AddSkillPoint(float value) { extra.Add(value); }
 
 	// LIFEの割合を得たいときに呼び出す
 	public float LifeRatio { get { return life.Ratio; } }
-	// SKILLの割合を得たいときに呼び出す
-	public float SkillRatio { get { return skill.Ratio; } }
+	// EXTRAの割合を得たいときに呼び出す
+	public float SkillRatio { get { return extra.Ratio; } }
 }

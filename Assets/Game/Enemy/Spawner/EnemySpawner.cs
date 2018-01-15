@@ -34,11 +34,12 @@ public class EnemySpawner : MonoBehaviour
 		// string[1] : enemyID
 		// string[2] : enemyName
 		// string[3] : startTime
-		// string[4] : spawnLimit
+		// string[4] : respawnTime
+		// string[5] : spawnLimit
 		var waveDataList = GameManager.Member.WaveDataList;
-		//Debug.Log(waveDataList[0][0]);
+		//Debug.LogError(waveDataList[0][0]);
 
-		for (int i = 0; i < 3; ++i) waves[i] = new List<EnemySpawnData>();
+		for (int i = 0; i < 3; ++i) { waves[i] = new List<EnemySpawnData>(); }
 
 		foreach (var strings in waveDataList)
 		{
@@ -48,17 +49,18 @@ public class EnemySpawner : MonoBehaviour
 			// ID : 100 : スライム
 			// ID : 200 : ゴブリン
 			// ID : 300 : オーク
-			if (strings[1] == "100") { obj = slime; offset = offset_slime; }
-			else if (strings[1] == "200") { obj = goblin; offset = offset_goblin; }
-			else if (strings[1] == "300") { obj = ork; offset = offset_ork; }
+			if (strings[1] == "1") { obj = slime; offset = offset_slime; }
+			else if (strings[1] == "2") { obj = goblin; offset = offset_goblin; }
+			else if (strings[1] == "3") { obj = ork; offset = offset_ork; }
+			//else Debug.LogError("EnemyObject is null");
 
 			// スポーンデータに各要素を格納
 			EnemySpawnData esd = new EnemySpawnData(
 				obj,
 				offset,
 				float.Parse(strings[3]), // startTime
-				respawnTime,
-				int.Parse(strings[4]), // spawnLimit
+				float.Parse(strings[4]), // respawnTime
+				int.Parse(strings[5]), // spawnLimit
 				transform);
 
 			// 対応するwaveにスポーンデータ追加
@@ -96,69 +98,6 @@ public class EnemySpawner : MonoBehaviour
 				cur_waveNum++;
 			}
 		}
-	}
-
-	class EnemySpawnData
-	{
-		GameObject enemyObj;
-		Vector3 offset;
-		float startTime;
-		float respawnTime;
-		int spawnLimit;
-		Transform transform;
-
-		bool start = false;
-		float elapsedTime = 0;
-		int spawnNum = 0;
-
-		// スポーン中の敵リスト
-		static List<GameObject> enemyList = new List<GameObject>();
-
-		public EnemySpawnData(GameObject enemyObj, Vector3 offset, float startTime, float respawnTime, int spawnLimit, Transform transform)
-		{
-			this.enemyObj = enemyObj;
-			this.offset = offset;
-			this.startTime = startTime;
-			this.respawnTime = respawnTime;
-			this.spawnLimit = spawnLimit;
-			this.transform = transform;
-		}
-
-		public void Update()
-		{
-			elapsedTime += Time.deltaTime;
-
-			if (!start && elapsedTime > startTime)
-			{
-				Spawn();
-				start = true;
-				elapsedTime = 0;
-			}
-
-			if (start && elapsedTime > respawnTime && spawnNum < spawnLimit)
-			{
-				Spawn();
-				elapsedTime = 0;
-			}
-		}
-
-		private void Spawn()
-		{
-			var obj = Instantiate(enemyObj, transform);
-			obj.transform.position += offset;
-			enemyList.Add(obj);
-
-			++spawnNum;
-		}
-
-		public bool EndWave
-		{
-			get {
-				return spawnNum >= spawnLimit;
-			}
-		}
-
-		public int EnemyCount { get { return enemyList.Count; } }
 	}
 
 	// for debug -------------------------------------

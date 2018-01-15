@@ -25,3 +25,12 @@ Assets/Scene_Home/
 /Assets/etc/AttackTest/AttackTrigger.cs
 /Assets/Scene_Title/standby.cs
 /Assets/Scene_Title/scenechange.cs
+*.jpg
+*.wav
+*.txt
+*.json
+Assets/Save.cs
+Zan.Editor.csproj
+*.apk
+*.anim
+*.controller

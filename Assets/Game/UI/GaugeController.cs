@@ -8,7 +8,7 @@ public class GaugeController : MonoBehaviour
 	[SerializeField]
 	Image lifeGauge;
 	[SerializeField]
-	Image skillGauge;
+	Image extraGauge;
 
 	[SerializeField]
 	GameObject player;
@@ -18,12 +18,12 @@ public class GaugeController : MonoBehaviour
     {
 		playerBehaviour = player.GetComponent<PlayerBehaviour>();
 		lifeGauge.fillAmount = playerBehaviour.LifeRatio;
-		skillGauge.fillAmount = playerBehaviour.SkillRatio;
+		extraGauge.fillAmount = playerBehaviour.SkillRatio;
     }
 	
     void FixedUpdate()
     {
 		lifeGauge.fillAmount = playerBehaviour.LifeRatio;
-		skillGauge.fillAmount = playerBehaviour.SkillRatio;
+		extraGauge.fillAmount = playerBehaviour.SkillRatio;
 	}
 }
