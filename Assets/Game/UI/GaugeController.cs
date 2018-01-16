@@ -18,12 +18,12 @@ public class GaugeController : MonoBehaviour
     {
 		playerBehaviour = player.GetComponent<PlayerBehaviour>();
 		lifeGauge.fillAmount = playerBehaviour.LifeRatio;
-		extraGauge.fillAmount = playerBehaviour.SkillRatio;
+		extraGauge.fillAmount = playerBehaviour.ExtraRatio;
     }
 	
     void FixedUpdate()
     {
 		lifeGauge.fillAmount = playerBehaviour.LifeRatio;
-		extraGauge.fillAmount = playerBehaviour.SkillRatio;
+		extraGauge.fillAmount = playerBehaviour.ExtraRatio;
 	}
 }

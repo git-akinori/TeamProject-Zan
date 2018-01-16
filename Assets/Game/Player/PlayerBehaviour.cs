@@ -67,5 +67,5 @@ public class PlayerBehaviour : MonoBehaviour
 	// LIFEの割合を得たいときに呼び出す
 	public float LifeRatio { get { return life.Ratio; } }
 	// EXTRAの割合を得たいときに呼び出す
-	public float SkillRatio { get { return extra.Ratio; } }
+	public float ExtraRatio { get { return extra.Ratio; } }
 }

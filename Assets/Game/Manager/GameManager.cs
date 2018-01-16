@@ -67,7 +67,10 @@ public class GameManager : MonoBehaviour
 
 	public void ToHomeScene()
 	{
-		Time.timeScale = 1.0f;
-		SceneManager.LoadScene("Home");
+		if (Time.timeScale != 1.0f)
+		{
+			Time.timeScale = 1.0f;
+			SceneManager.LoadScene("Home");
+		}
 	}
 }

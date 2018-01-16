@@ -13,10 +13,11 @@ class EnemySpawnData
 
 	bool start = false;
 	float elapsedTime = 0;
-	int spawnNum = 0;
+	int spawnedNum = 0;
+	int aliveNum = 0;
 
 	// スポーン中の敵リスト
-	static List<GameObject> enemyList = new List<GameObject>();
+	List<GameObject> enemyList = new List<GameObject>();
 
 	public EnemySpawnData(GameObject enemyObj, Vector3 offset, float startTime, float respawnTime, int spawnLimit, Transform transform)
 	{
@@ -34,34 +35,38 @@ class EnemySpawnData
 
 		if (!start && elapsedTime > startTime)
 		{
-			Spawn();
 			start = true;
 			elapsedTime = 0;
+			Spawn();
+		}
+		else if (start && elapsedTime > respawnTime && spawnedNum < spawnLimit)
+		{
+			elapsedTime = 0;
+			Spawn();
 		}
 
-		if (start && elapsedTime > respawnTime && spawnNum < spawnLimit)
+		int deadNum = 0;
+		foreach (var enemy in enemyList)
 		{
-			Spawn();
-			elapsedTime = 0;
+			if (enemy == null) deadNum++;
 		}
+		aliveNum = spawnedNum - deadNum;
 	}
 
 	private void Spawn()
 	{
-		var obj = Object.Instantiate(enemyObj, transform);
-		obj.transform.position += offset;
-		enemyList.Add(obj);
-
-		++spawnNum;
-	}
-
-	public bool EndWave
-	{
-		get
+		if (enemyObj)
 		{
-			return spawnNum >= spawnLimit;
+			var obj = Object.Instantiate(enemyObj, transform);
+			obj.transform.position += offset;
+			enemyList.Add(obj);
+
+			spawnedNum++;
 		}
+		else Debug.LogError("enemyObj is null");
 	}
 
-	public int EnemyCount { get { return enemyList.Count; } }
+	public int SpawnedNum { get { return spawnedNum; } }
+	public int SpawnLimit { get { return spawnLimit; } }
+	public int AliveNum { get { return aliveNum; } }
 }
