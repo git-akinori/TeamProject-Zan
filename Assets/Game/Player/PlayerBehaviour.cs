@@ -12,9 +12,6 @@ public class PlayerBehaviour : MonoBehaviour
 	Gauge life;
 	Gauge extra;
 
-	[SerializeField]
-	GameObject ResultCanvas;
-
 	void Start()
 	{
 		life = new Gauge(maxLIFE, 1);

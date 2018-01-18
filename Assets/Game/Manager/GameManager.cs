@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 	static GameManager gameManager = null;
 
 	[SerializeField]
-	GameObject resultCanvas;
+	GameObject CanvasUI;
 
 	CsvReader csvReader = new CsvReader();
 	string[] filePaths = new string[] {
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
 	// functions -------------------------------------------------------------
 	public void EnterResult(bool win)
 	{
-		resultCanvas.GetComponent<Result>().EnterResult(win);
+		CanvasUI.GetComponent<Result>().EnterResult(win);
 	}
 
 	public void ToHomeScene()

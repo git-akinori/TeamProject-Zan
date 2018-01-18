@@ -84,11 +84,10 @@ public class EnemySpawner : MonoBehaviour
 				transform);                 // parentTransform
 
 			// 対応するwaveにスポーンデータ追加
-			if (strings[0] == "1") waves[0].Add(esd);
-			else if (strings[0] == "2") waves[1].Add(esd);
-			else if (strings[0] == "3") waves[2].Add(esd);
+			waves[int.Parse(strings[0]) - 1].Add(esd);
 		}
 
+		// 現在のウェーブの最大スポーン数を格納
 		total_spawnLimit = 0;
 		foreach (var esd in waves[cur_waveNum])
 		{
@@ -96,45 +95,61 @@ public class EnemySpawner : MonoBehaviour
 		}
 	}
 
+	bool wave_start = false;
+
 	void FixedUpdate()
 	{
 		// 通常時
 		if (!debugMode)
 		{
-			int total_spawnedNum = 0;
-			int total_aliveNum = 0;
-			foreach (var esd in waves[cur_waveNum])
+			// ウェーブ開始までのカウントダウン処理
+			if (!wave_start)
 			{
-				esd.Update();
-				total_spawnedNum += esd.SpawnedNum;
-				total_aliveNum += esd.AliveNum;
+				/*
+				 
+				 */
+				wave_start = true;
 			}
-
-			Debug.Log(total_aliveNum);
-
-			if (total_spawnedNum >= total_spawnLimit && total_aliveNum == 0)
+			// ウェーブ開始
+			else
 			{
-				cur_waveNum++;
-				Debug.Log("End Wave " + cur_waveNum + "!");
-
-				if (cur_waveNum < 3)
+				// 現在のウェーブの敵の種類ごとの処理
+				int total_spawnedNum = 0;
+				int total_aliveNum = 0;
+				foreach (var esd in waves[cur_waveNum])
 				{
-					total_spawnLimit = 0;
-					foreach (var esd in waves[cur_waveNum])
+					esd.Update();
+					total_spawnedNum += esd.SpawnedNum;
+					total_aliveNum += esd.AliveNum;
+				}
+
+				// ウェーブクリア判定
+				if (total_spawnedNum >= total_spawnLimit && total_aliveNum == 0)
+				{
+					cur_waveNum++;
+					Debug.Log("End Wave " + cur_waveNum + "!");
+
+					// 最大スポーン数を次ウェーブに切り替え
+					if (cur_waveNum < 3)
 					{
-						total_spawnLimit += esd.SpawnLimit;
+						total_spawnLimit = 0;
+						foreach (var esd in waves[cur_waveNum])
+						{
+							total_spawnLimit += esd.SpawnLimit;
+						}
+					}
+					// ステージクリア判定と処理
+					else
+					{
+						GameManager.Member.EnterResult(true); // WIN
 					}
 				}
-				else
-				{
-					GameManager.Member.EnterResult(true); // WIN
-				}
 			}
-
 		}
 		// デバッグモード時
 		else
 		{
+			// 一定間隔でスポーン
 			if (debugSpawnTime > 0)
 			{
 				elapsedTime += Time.deltaTime;
@@ -144,6 +159,7 @@ public class EnemySpawner : MonoBehaviour
 					SpawnEnemy();
 				}
 			}
+			// チェックを入れた時に1体だけスポーン
 			if (spawnOnce)
 			{
 				spawnOnce = false;
