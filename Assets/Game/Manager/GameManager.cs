@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 
 	[SerializeField]
 	GameObject CanvasUI;
+	[SerializeField]
+	GameObject Player;
 
 	CsvReader csvReader = new CsvReader();
 	string[] filePaths = new string[] {
@@ -57,7 +59,7 @@ public class GameManager : MonoBehaviour
 	public static GameManager Member { get { return gameManager; } }
 
 	public List<string[]> WaveDataList { get { return waveDataList; } }
-
+	public GameObject PlayerObj { get { return Player; } }
 
 	// functions -------------------------------------------------------------
 	public void EnterResult(bool win)

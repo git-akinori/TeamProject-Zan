@@ -21,7 +21,7 @@ public class PlayerBehaviour : MonoBehaviour
 	void FixedUpdate()
 	{
 		//life.Add(-0.1f);
-		extra.Add(0.1f);
+		//AddExtraPoint(0.1f);
 
 		if(life.CurValue <= 0)
 		{
@@ -59,7 +59,7 @@ public class PlayerBehaviour : MonoBehaviour
 	public void Damaged(float value) { life.Add(-value); }
 
 	// 敵を倒したときの処理で呼び出す
-	public void AddSkillPoint(float value) { extra.Add(value); }
+	public void AddExtraPoint(float value) { extra.Add(value); }
 
 	// LIFEの割合を得たいときに呼び出す
 	public float LifeRatio { get { return life.Ratio; } }

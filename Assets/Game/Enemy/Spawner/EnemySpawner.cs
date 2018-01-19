@@ -116,11 +116,15 @@ public class EnemySpawner : MonoBehaviour
 				// 現在のウェーブの敵の種類ごとの処理
 				int total_spawnedNum = 0;
 				int total_aliveNum = 0;
-				foreach (var esd in waves[cur_waveNum])
+
+				if (cur_waveNum < 3)
 				{
-					esd.Update();
-					total_spawnedNum += esd.SpawnedNum;
-					total_aliveNum += esd.AliveNum;
+					foreach (var esd in waves[cur_waveNum])
+					{
+						esd.Update();
+						total_spawnedNum += esd.SpawnedNum;
+						total_aliveNum += esd.AliveNum;
+					}
 				}
 
 				// ウェーブクリア判定

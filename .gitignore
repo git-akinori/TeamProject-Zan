@@ -34,3 +34,5 @@ Zan.Editor.csproj
 *.apk
 *.anim
 *.controller
+*.mp3
+Assets/etc/AttackTest/Attack_Special.cs
