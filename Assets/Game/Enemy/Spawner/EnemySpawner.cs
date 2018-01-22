@@ -7,37 +7,34 @@ public class EnemySpawner : MonoBehaviour
 	[SerializeField]
 	GameObject slime;
 	[SerializeField]
-	GameObject skelton;
+	GameObject skeleton;
 	[SerializeField]
 	GameObject ork;
 
 	[SerializeField]
 	Vector3 offset_slime;
 	[SerializeField]
-	Vector3 offset_skelton;
+	Vector3 offset_skeleton;
 	[SerializeField]
 	Vector3 offset_ork;
 
 	[SerializeField]
 	GameObject boss_slime;
 	[SerializeField]
-	GameObject boss_skelton;
+	GameObject boss_skeleton;
 	[SerializeField]
 	GameObject boss_ork;
 
 	[SerializeField]
 	Vector3 offset_boss_slime;
 	[SerializeField]
-	Vector3 offset_boss_skelton;
+	Vector3 offset_boss_skeleton;
 	[SerializeField]
 	Vector3 offset_boss_ork;
 
 	int cur_waveNum = 0;
 
 	int total_spawnLimit = 0;
-
-	[SerializeField]
-	bool debugMode = false;
 
 	// wave毎に敵のスポーンデータリストを用意
 	List<EnemySpawnData>[] waves = new List<EnemySpawnData>[3];
@@ -68,15 +65,16 @@ public class EnemySpawner : MonoBehaviour
 			// ID : 1002 : ゴブリン
 			// ID : 1003 : オーク
 			if (strings[1] == "101") { obj = slime; offset = offset_slime; }
-			else if (strings[1] == "102") { obj = skelton; offset = offset_skelton; }
+			else if (strings[1] == "102") { obj = skeleton; offset = offset_skeleton; }
 			else if (strings[1] == "103") { obj = ork; offset = offset_ork; }
 			else if (strings[1] == "1001") { obj = boss_slime; offset = offset_boss_slime; }
-			else if (strings[1] == "1002") { obj = boss_skelton; offset = offset_boss_skelton; }
+			else if (strings[1] == "1002") { obj = boss_skeleton; offset = offset_boss_skeleton; }
 			else if (strings[1] == "1003") { obj = boss_ork; offset = offset_boss_ork; }
 
 			// スポーンデータに各要素を格納
 			EnemySpawnData esd = new EnemySpawnData(
 				obj,                        // enemyObj
+				strings[2],					// enemyName
 				offset,                     // position
 				float.Parse(strings[3]),    // startTime
 				float.Parse(strings[4]),    // respawnTime
@@ -153,6 +151,12 @@ public class EnemySpawner : MonoBehaviour
 		// デバッグモード時
 		else
 		{
+			// 常に1体だけ生存する
+			if (OnlyOneEnemy)
+			{
+				if(debugSpawnTime != 0) debugSpawnTime = 0;
+				if(!debugEnemyObj) SpawnEnemy();
+			}
 			// 一定間隔でスポーン
 			if (debugSpawnTime > 0)
 			{
@@ -163,71 +167,72 @@ public class EnemySpawner : MonoBehaviour
 					SpawnEnemy();
 				}
 			}
-			// チェックを入れた時に1体だけスポーン
-			if (spawnOnce)
-			{
-				spawnOnce = false;
-				debugSpawnTime = 0;
-				SpawnEnemy();
-			}
 		}
 	}
 
 	// for debug ---------------------------------------------------
-	enum EnumEnemy
-	{
-		SLIME,
-		SKELTON,
-		ORK,
-		BOSS_SLIME,
-		BOSS_SKELTON,
-		BOSS_ORK,
-	}
+
+	[SerializeField]
+	bool debugMode = false;
+	[SerializeField]
+	bool OnlyOneEnemy = false;
 
 	[SerializeField]
 	EnumEnemy EnemyName;
 
 	float elapsedTime = 0;
+
 	[SerializeField]
 	float debugSpawnTime = 1;
 
-	[SerializeField]
-	bool spawnOnce = false;
+	GameObject debugEnemyObj;
 
 	void SpawnEnemy()
 	{
 		GameObject enemy = null;
+		string name = "";
 		Vector3 offset = Vector3.zero;
 
 		switch (EnemyName)
 		{
 			case EnumEnemy.SLIME:
 				enemy = slime;
+				name = "Slime";
 				offset = offset_slime;
 				break;
-			case EnumEnemy.SKELTON:
-				enemy = skelton;
-				offset = offset_skelton;
+			case EnumEnemy.SKELETON:
+				enemy = skeleton;
+				name = "Skeleton";
+				offset = offset_skeleton;
 				break;
 			case EnumEnemy.ORK:
 				enemy = ork;
+				name = "Ork";
 				offset = offset_ork;
 				break;
 
 			case EnumEnemy.BOSS_SLIME:
 				enemy = boss_slime;
+				name = "Boss Slime";
 				offset = offset_boss_slime;
 				break;
-			case EnumEnemy.BOSS_SKELTON:
-				enemy = boss_skelton;
-				offset = offset_boss_skelton;
+			case EnumEnemy.BOSS_SKELETON:
+				enemy = boss_skeleton;
+				name = "Boss Skeleton";
+				offset = offset_boss_skeleton;
 				break;
 			case EnumEnemy.BOSS_ORK:
 				enemy = boss_ork;
+				name = "Boss Ork";
 				offset = offset_boss_ork;
 				break;
 		}
+
 		if (enemy != null)
-			Instantiate(enemy, transform).transform.position += offset;
+		{
+			debugEnemyObj = Instantiate(enemy, transform);
+			debugEnemyObj.transform.position += offset;
+			debugEnemyObj.transform.name = name;
+		}
 	}
 }

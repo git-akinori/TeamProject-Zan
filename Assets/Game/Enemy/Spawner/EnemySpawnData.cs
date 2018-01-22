@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-class EnemySpawnData
+class EnemySpawnData : MonoBehaviour
 {
 	GameObject enemyObj;
+	string enemyName;
 	Vector3 offset;
 	float startTime;
 	float respawnTime;
 	int spawnLimit;
-	Transform transform;
+	new Transform transform;
 
 	bool start = false;
 	float elapsedTime = 0;
@@ -19,9 +20,10 @@ class EnemySpawnData
 	// スポーン中の敵リスト
 	List<GameObject> enemyList = new List<GameObject>();
 
-	public EnemySpawnData(GameObject enemyObj, Vector3 offset, float startTime, float respawnTime, int spawnLimit, Transform transform)
+	public EnemySpawnData(GameObject enemyObj, string enemyName, Vector3 offset, float startTime, float respawnTime, int spawnLimit, Transform transform)
 	{
 		this.enemyObj = enemyObj;
+		this.enemyName = enemyName;
 		this.offset = offset;
 		this.startTime = startTime;
 		this.respawnTime = respawnTime;
@@ -57,8 +59,9 @@ class EnemySpawnData
 	{
 		if (enemyObj)
 		{
-			var obj = Object.Instantiate(enemyObj, transform);
+			var obj = Instantiate(enemyObj, transform);
 			obj.transform.position += offset;
+			obj.transform.name = enemyName;
 			enemyList.Add(obj);
 
 			spawnedNum++;

@@ -8,9 +8,11 @@ public class GameManager : MonoBehaviour
 	static GameManager gameManager = null;
 
 	[SerializeField]
-	GameObject CanvasUI;
+	GameObject canvasUI;
 	[SerializeField]
-	GameObject Player;
+	GameObject player;
+	[SerializeField]
+	GameObject enemySpawner;
 
 	CsvReader csvReader = new CsvReader();
 	string[] filePaths = new string[] {
@@ -59,12 +61,13 @@ public class GameManager : MonoBehaviour
 	public static GameManager Member { get { return gameManager; } }
 
 	public List<string[]> WaveDataList { get { return waveDataList; } }
-	public GameObject PlayerObj { get { return Player; } }
+	public PlayerBehaviour PlayerBehaviour { get { return player.GetComponent<PlayerBehaviour>(); } }
+	public EnemyStatus EnemyStatus { get { return enemySpawner.GetComponent<EnemyStatus>(); } }
 
 	// functions -------------------------------------------------------------
 	public void EnterResult(bool win)
 	{
-		CanvasUI.GetComponent<Result>().EnterResult(win);
+		canvasUI.GetComponent<Result>().EnterResult(win);
 	}
 
 	public void ToHomeScene()
